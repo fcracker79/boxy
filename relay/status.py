@@ -20,19 +20,19 @@ def reportbandwidth():
 			os.system('cls')
 		else:
 			os.system('clear')
-		print "Relaying on port {0} to {1}:{2}".format(_relayport, _remoteaddress, _remoteport)
-		print "From remote: {0:.6f}MB/s | To remote: {1:.6f}MB/s".format(float(bytesfromremote)/1000000, float(bytestoremote)/1000000)
-		if (step == 0):
-			print "\\"
+		print("Relaying on port {0} to {1}:{2}".format(_relayport, _remoteaddress, _remoteport))
+		print("From remote: {0:.6f}MB/s | To remote: {1:.6f}MB/s".format(float(bytesfromremote)/1000000, float(bytestoremote)/1000000))
+		if(step == 0):
+			print("\\")
 			step += 1
 		elif (step == 1):
-			print "|"
+			print("|")
 			step += 1
 		elif (step == 2):
-			print "/"
+			print("/")
 			step += 1
 		elif (step == 3):
-			print "-"
+			print("-")
 			step = 0
 		bytesfromremote = 0
 		bytestoremote = 0

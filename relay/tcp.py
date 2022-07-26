@@ -1,8 +1,8 @@
-import sys
 import socket
+import sys
 import threading
-import status
-import time
+
+from relay import status
 
 _kill = False
 _relayport = 0
@@ -60,7 +60,7 @@ def client(client, server):
 		try:
 			data = client.recv(1)
 
-			if (data == ""):
+			if (data == b""):
 				close(client, server)
 				break
 
@@ -78,7 +78,7 @@ def server(client, server):
 		try:
 			data = server.recv(1)
 
-			if (data == ""):
+			if (data == b""):
 				close(client, server)
 				break
 

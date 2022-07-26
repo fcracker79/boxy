@@ -1,7 +1,7 @@
 import sys
 import socket
 import threading
-import status
+from relay import status
 
 _kill = False
 _relayport = 0
@@ -53,5 +53,5 @@ def stop():
 	_kill = True
 	#send anything to the input port to trigger it to read, therefore allowing the thread to close
 	quitsock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-	quitsock.sendto("killing", ("127.0.0.1", _relayport))
+	quitsock.sendto(b"killing", ("127.0.0.1", _relayport))
 	quitsock.close()

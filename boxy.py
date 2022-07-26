@@ -1,11 +1,10 @@
-import socket
-import threading
-import sys
 import getopt
-import os
-from relay import udp
-from relay import tcp
+import sys
+import time
+
 from relay import status
+from relay import tcp
+from relay import udp
 
 relayport = 0
 remoteport = 0 
@@ -15,20 +14,20 @@ protocol = "UDP"
 help = "Invalid arguments, usage:\nboxy.py -i <input port> -p <remote port> -a <remote address> [-t]"
 
 def quit():
-	print "Quitting..."
+	print("Quitting...")
 
 	if (protocol == "UDP"):
 		udp.stop()
 	else:
 		tcp.stop()
 
-	os._exit(0)
+	exit(0)
 
 #process args
 try:
 	options, args = getopt.getopt(sys.argv[1:], "i:p:a:t")
 except getopt.GetoptError:
-	print help
+	print(help)
 	sys.exit(2)
 
 try:
@@ -42,14 +41,14 @@ try:
 		elif (option == "-t"):
 			protocol = "TCP"
 except ValueError:
-	print help
+	print(help)
 	sys.exit(2)
 
 if ((0 < relayport <= 65535 and 0 < remoteport <= 65535 and remoteaddress != "") == False):
-	print help
+	print(help)
 	sys.exit(2)
 
-print "Relay starting on port {0}, relaying {1} to {2}:{3}".format(relayport, protocol, remoteaddress, remoteport)
+print("Relay starting on port {0}, relaying {1} to {2}:{3}".format(relayport, protocol, remoteaddress, remoteport))
 
 if (protocol == "UDP"):
 	udp.start(relayport, remoteaddress, remoteport)
@@ -58,9 +57,8 @@ else:
 status.start(relayport, remoteaddress, remoteport)
 
 try:
-	while raw_input() != "quit":
-		continue
-	quit()
+	while True:
+		time.sleep(3600)
 except KeyboardInterrupt:
 	quit()
 except EOFError:
@@ -68,4 +66,4 @@ except EOFError:
 	try:
 		quit()
 	except KeyboardInterrupt:
-		os._exit(0)
+		exit(0)
